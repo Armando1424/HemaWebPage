@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<script src="JS/validar.js"></script>
+<div class="container p-5">
+                <div class="form-group">
+                                <div class="col-md-5 offset-md-3">
+                                    <div class="card card-body">
+                                            <form action="/registerUser" method="POST" onsubmit="return validarRegister();">
+                                                <div class="form-group">
+                                                        <input type="text" name="nickName" id="nickName" placeholder="Enter Nickname" maxlength="200" required class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                        <input type="text" name="userName" id="userName" placeholder="Enter Name" maxlength="200" required class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                        <input type="text" name="firstLastname" id="firstLastname" placeholder="Enter First Last Name" maxlength="200" required class="form-control">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                        <input type="text" name="secondLastname" id="secondLastname" placeholder="Enter Second Last Name (optional)" maxlength="200" class="form-control">
+                                                </div>
+                            
+                                               <div class="form-group">
+                                                <input type="email" name="email" id="email" placeholder="Enter Email" maxlength="200" required class="form-control">
+                                               </div>
+                            
+                                               <div class="form-group">
+                                                <input type="password" name="password" id="password" placeholder="Enter Password" maxlength="200" required class="form-control">
+                                                
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                        <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                                                </div>
+                                               
+                                            </form>
+                            
+                                    </div>
+                            
+                               </div>
+                            
+                            </div>
+
+</div>
+
+
+
+{% endblock %}

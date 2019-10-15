@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <section class="main row">
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-6">
+            <div class="no_message">
+                <h1 style='color: #ccc'>No hay mensajes aun..</h1>
+                <div class="message_holder"></div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-6">
+            <div class="container p-4">
+                <div class="form-group">
+                    <div class="card card-body">
+                        <form action="" method="POST">
+                            <b>¡Escribe un mensaje divertido y observa que pasa!
+                                <span class="glyphicon glyphicon-hand-down"></span>
+                            </b>
+                            <div class="clearfix" style="margin-top: 5px;"></div>
+                            <input type="text" class="username form-control" value="{{ nickName }}"
+                                placeholder="Type a message" readonly="readonly">
+                            <div style="padding-top: 5px;"></div>
+                            <label for="exampleInputEmail1">Escribe un mensaje</label>
+                            <input type="text" class="message form-control" placeholder="Type a message">
+                            <div style="padding-top: 5px;"></div>
+                            <button type="submit" class="btn btn-success btn-block">
+                                <span class="glyphicon glyphicon-send"></span> Enviar</button>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port)
+    // broadcast a message
+    socket.on('connect', function () {
+        socket.emit('my event', {
+            data: 'User Connected'
+        })
+        var form = $('form').on('submit', function (e) {
+            e.preventDefault()
+            let user_name = $('input.username').val()
+            let user_input = $('input.message').val()
+            socket.emit('my event', {
+                user_name: user_name,
+                message: user_input
+            })
+            // empty the input field
+            $('input.message').val('').focus()
+        })
+    })
+    // capture message
+    socket.on('my response', function (msg) {
+        console.log(msg)
+        if (typeof msg.user_name !== 'undefined') {
+            $('h1').remove()
+            $('div.message_holder').append('<div class="msg_bbl break-word"><b style="color: #000">' + msg.user_name + '</b> ' + msg.message + '</div>')
+        }
+    })
+</script>
+$('#preview img').attr('src', e.target.result);
+
+{% endblock %}
